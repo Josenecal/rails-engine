@@ -12,8 +12,9 @@ require 'webmock/rspec'
 require 'vcr'
 
 VCR.configure do |c|
-  c.cassette_library_dir = 'vcr_cassettes'
+  c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
+  c.configure_rspec_metadata
 end
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -77,4 +78,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # so we can use :vcr rather than :vcr => true;
+  # HERE FOR POSTARITY - RSpec 3 this will no longer be necessary, and we are running 3.11.0
+  # config.treat_symbols_as_metadata_keys_with_true_values = true
 end
