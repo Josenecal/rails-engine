@@ -5,6 +5,17 @@ require 'spec_helper'
 require 'simplecov'
 SimpleCov.start
 
+# Inherrits stubbing abilities from webmock
+require 'webmock/rspec'
+
+# Configures VCR's cassettes
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'vcr_cassettes'
+  c.hook_into :webmock
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
