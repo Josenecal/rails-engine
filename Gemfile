@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :test do
   gem "webmock"
   gem "vcr"
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development, :test do
