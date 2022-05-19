@@ -1,11 +1,11 @@
 class Api::V1::ItemsController < ApplicationController
 
   def index
-    render json: ItemSerializer.all_items(Item.all)
+    render json: Api::V1::ItemSerializer.new(Item.all).serializable_hash
   end
 
   def show
-    render json: ItemSerializer.find_item(Item.find(params[:id]))
+    render json: Item.find(params[:id])
   end
 
   def create
@@ -15,13 +15,34 @@ class Api::V1::ItemsController < ApplicationController
       unit_price: item_params[:unit_price],
       merchant_id: item_params[:merchant_id]
     )
-    render json: ItemSerializer.find_item(item), status: 201
+    render json: Api::V1::ItemSerializer.new(Item.find(item.id)).serializable_hash, status: 201
   end
 
   def destroy
     item = Item.find(params[:id])
     Item.destroy(params[:id])
-    render json: ItemSerializer.find_item(item), status: 202
+    render status: 202
+  end
+
+  def update
+    if (Item.exists?(params[:id]) && item_params[:merchant_id] && Merchant.exists?(item_params[:merchant_id])) || (Item.exists?(params[:id]) && !item_params[:merchant_id])
+      item = Item.find(params[:id])
+      item.name = item_params[:name] if item_params[:name]
+      item.description = item_params[:description] if item_params[:description]
+      item.unit_price = item_params[:unit_price] if item_params[:unit_price]
+      item.merchant_id = item_params[:merchant_id] if item_params[:merchant_id]
+      item.save
+
+      render json: Item.find(params[:id])
+    elsif Item.exists?(params[:id]) && item_params[:merchant_id] && !Merchant.exists?(item_params[:merchant_id])
+      render json: {"error": "the merchant id you are trying to update does not exist in our database as entered."}, status: 404
+    elsif !Item.exists?(params[:id])
+      render json: {"error": "the item resource you are searching for does not exist in our database as entered."}, status: 404
+    else
+      render json: {"error": "your request could not be processed. please chceck your formatting and try again"}, status: 400
+    end
+
+
   end
 
 private
