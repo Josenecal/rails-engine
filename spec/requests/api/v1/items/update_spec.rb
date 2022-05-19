@@ -59,13 +59,31 @@ RSpec.describe "item update endpoint: PATCH '/items/:id'" do
     expect(response_body[:data][:attributes][:merchant_id]).to eq merchant2.id
   end
 
-  it "responds 404 if the merchant id or item id are bad" do
+  it "responds 404 if the item id id bad" do
     merchant1 = create(:merchant)
     merchant2 = create(:merchant)
     item = create(:item, merchant_id: merchant1.id)
     item_id = item.id
     item2 = create(:item, merchant_id: merchant1.id)
     Item.destroy(item.id)
+    patch "/api/v1/items/#{item_id}", params: {
+      "name": "unique_axolotte",
+      "description": "a uniquely new and updated description",
+      "unit_price": 9.99,
+      "merchant_id": merchant2.id,
+      "id": item2.id,
+      "excessive_param": "insert malicious code here!"
+    }
+    expect(response.status).to eq 404
+  end
+
+  it "responds 404 if the merchant id id bad" do
+    merchant1 = create(:merchant)
+    merchant2 = create(:merchant)
+    item = create(:item, merchant_id: merchant1.id)
+    item_id = item.id
+    item2 = create(:item, merchant_id: merchant1.id)
+    Merchant.destroy(merchant2.id)
     patch "/api/v1/items/#{item_id}", params: {
       "name": "unique_axolotte",
       "description": "a uniquely new and updated description",
