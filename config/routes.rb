@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   post 'api/v1/items', to: 'api/v1/items#create'
   get 'api/v1/items/:id', to: 'api/v1/items#show'
   delete 'api/v1/items/:id', to: 'api/v1/items#destroy'
+  patch 'api/v1/items/:id', to: 'api/v1/items#update'
+  put 'api/v1/items/:id', to: 'api/v1/items#update'
+
 end
