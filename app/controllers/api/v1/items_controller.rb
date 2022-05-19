@@ -38,11 +38,7 @@ class Api::V1::ItemsController < ApplicationController
       render json: {"error": "the merchant id you are trying to update does not exist in our database as entered."}, status: 404
     elsif !Item.exists?(params[:id])
       render json: {"error": "the item resource you are searching for does not exist in our database as entered."}, status: 404
-    else
-      render json: {"error": "your request could not be processed. please chceck your formatting and try again"}, status: 400
     end
-
-
   end
 
 private
