@@ -31,7 +31,7 @@ RSpec.describe "merchants index endpoint: /api/v1/merchants/:id/items" do
         expect(resource[:attributes].class).to eq Hash
         expect(resource[:attributes][:name].class).to eq String
         expect(resource[:attributes][:description].class).to eq String
-        expect(resource[:attributes][:unit_price]).to match /\d+\.\d+/ # Float regex
+        expect(resource[:attributes][:unit_price].class).to eq Float
       end
     end
 
