@@ -4,13 +4,11 @@ class MerchantItemSerializer
       data: items.map do |item|
         {
           type: "item",
-          id: item.id,
+          id: item.id.to_s,
           attributes: {
             name: item.name,
             description: item.description,
-            unit_price: item.unit_price,
-            created_at: item.created_at,
-            updated_at: item.updated_at
+            unit_price: item.unit_price.to_s
           }
         }
       end

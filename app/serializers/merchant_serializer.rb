@@ -4,11 +4,9 @@ class MerchantSerializer
       data: merchants.map do |merchant|
         {
           type: "merchant",
-          id: merchant.id,
+          id: merchant.id.to_s,
           attributes: {
-            name: merchant.name,
-            created_at: merchant.created_at,
-            updated_at: merchant.updated_at
+            name: merchant.name
           }
         }
       end
@@ -19,11 +17,9 @@ class MerchantSerializer
     {
       data:{
         type: "merchant",
-        id: merchant.id,
+        id: merchant.id.to_s,
         attributes: {
-          name: merchant.name,
-          created_at: merchant.created_at,
-          updated_at: merchant.updated_at
+          name: merchant.name
         }
       }
     }

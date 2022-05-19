@@ -27,13 +27,11 @@ RSpec.describe "merchants index endpoint: /api/v1/merchants/:id/items" do
       expect(response_body[:data].length).to eq 2
       response_body[:data].each do |resource|
         expect(resource[:type]).to eq "item"
-        expect(resource[:id].class).to eq Integer
+        expect(resource[:id]).to match /\d+/ # Int regex
         expect(resource[:attributes].class).to eq Hash
         expect(resource[:attributes][:name].class).to eq String
         expect(resource[:attributes][:description].class).to eq String
-        expect(resource[:attributes][:unit_price].class).to eq Float
-        expect(Time.parse(resource[:attributes][:created_at]).class).to eq Time
-        expect(Time.parse(resource[:attributes][:updated_at]).class).to eq Time 
+        expect(resource[:attributes][:unit_price]).to match /\d+\.\d+/ # Float regex
       end
     end
 
