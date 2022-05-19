@@ -82,6 +82,9 @@ RSpec.configure do |config|
   # so we can use :vcr rather than :vcr => true;
   # HERE FOR POSTARITY - RSpec 3 this will no longer be necessary, and we are running 3.11.0
   # config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  # Include factorybot test syntax
+  config.include FactoryBot::Syntax::Methods
 end
 
 # To configure shoulda matchers for RSpec

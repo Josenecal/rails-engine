@@ -25,6 +25,9 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# For serializing JSON responses
+gem 'jsonapi-serializer'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
@@ -32,6 +35,7 @@ group :test do
   gem "webmock"
   gem "vcr"
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'factory_bot_rails'
 end
 
 group :development, :test do
@@ -39,6 +43,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'simplecov'
+  gem 'faker'
+  gem 'pry'
+  gem 'httparty'
 end
 
 group :development do
