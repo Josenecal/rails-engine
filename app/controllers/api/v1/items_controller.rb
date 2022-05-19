@@ -5,7 +5,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def show
-    render json: Item.find(params[:id])
+    render json: Api::V1::ItemSerializer.new(Item.find(params[:id])).serializable_hash
   end
 
   def create
@@ -33,7 +33,7 @@ class Api::V1::ItemsController < ApplicationController
       item.merchant_id = item_params[:merchant_id] if item_params[:merchant_id]
       item.save
 
-      render json: Item.find(params[:id])
+      render json: Api::V1::ItemSerializer.new(Item.find(params[:id])).serializable_hash
     elsif Item.exists?(params[:id]) && item_params[:merchant_id] && !Merchant.exists?(item_params[:merchant_id])
       render json: {"error": "the merchant id you are trying to update does not exist in our database as entered."}, status: 404
     elsif !Item.exists?(params[:id])
