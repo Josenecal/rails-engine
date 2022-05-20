@@ -10,5 +10,16 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
-  
+
+  def self.find_by_name(query)
+    where("lower(name) LIKE ?", '%'+query.downcase+'%')
+    .order(:name)
+    .first
+  end
+
+  def self.find_by_price(min, max)
+    where(unit_price: min..max)
+    .order('lower(name)')
+    .first
+  end
 end
