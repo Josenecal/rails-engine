@@ -9,7 +9,12 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def find_all
-    Merchant.find_all_by_name(params[:name])
+    if params[:name] == nil || params[:name] == ""
+      render json: { "error": "the query parameter 'name' and a corresponding search value are required at this endpoint"}, status: 412
+    else
+      merchants = Merchant.find_all_by_name(params[:name])
+      render json: MerchantSerializer.all_merchants(merchants)
+    end
   end
 
 end
