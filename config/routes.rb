@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get 'api/v1/items', to: 'api/v1/items#index'
   post 'api/v1/items', to: 'api/v1/items#create'
-  get 'api/v1/items/find', to: 'api/v1/items#find'
+  get 'api/v1/items/find', to: 'api/v1/item_search#find'
   get 'api/v1/items/:id', to: 'api/v1/items#show'
   delete 'api/v1/items/:id', to: 'api/v1/items#destroy'
   patch 'api/v1/items/:id', to: 'api/v1/items#update'
