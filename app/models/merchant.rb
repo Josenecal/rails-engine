@@ -7,4 +7,9 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
+  def self.find_all_by_name(query)
+    Merchant
+    .where("lower(name) LIKE ?", '%'+query.downcase+'%')
+    .order(:name)
+  end
 end
