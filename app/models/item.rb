@@ -19,7 +19,7 @@ class Item < ApplicationRecord
 
   def self.find_by_price(min, max)
     where(unit_price: min..max)
-    .order(:name)
+    .order('lower(name)')
     .first
   end
 end
