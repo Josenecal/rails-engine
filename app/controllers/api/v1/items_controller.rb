@@ -41,36 +41,6 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
-  def find
-    if (params[:name] == nil || params[:name] == "") && (params[:min_price] == nil && params[:max_price] == nil)
-      render json: { "error": "this endpoint requires at least one of the following query parameters: name, min_price, or max_price"}, status: 400
-    elsif params[:name] != nil && (params[:min_price] != nil || params[:max_price] != nil)
-      render json: { "error": "this endpoint does not support searching by both name and price at once. Please try again using only name or price query parameters (you may search by min_price and max_price simultaniously)"}, status: 400
-    elsif params[:name] != nil
-      item = Item.find_by_name(params[:name])
-      if item
-        render json: Api::V1::ItemSerializer.new(item).serializable_hash, status: 200
-      else
-        render json: {"data": {}}, status: 200
-      end
-    elsif params[:min_price] || params[:max_price]
-      if params[:min_price]
-        render json: { "error": "bad request" }, status: 400 if params[:min_price].to_f < 0
-      end
-      if params[:max_price]
-        render json: { "error": "bad request" }, status: 400 if params[:max_price].to_f < 0
-      end
-      item = Item.find_by_price(params[:min_price].to_f, params[:max_price].to_f) if params[:min_price] && params[:max_price]
-      item = Item.find_by_price(params[:min_price].to_f, Float::INFINITY) if params[:min_price]
-      item = Item.find_by_price(-Float::INFINITY, params[:max_price].to_f) if params[:max_price]
-      if item
-        # binding.pry
-        render json: Api::V1::ItemSerializer.new(item).serializable_hash, status: 200
-      else
-        render json: {"data": {}}, status: 200
-      end
-    end
-  end
 
 private
 
