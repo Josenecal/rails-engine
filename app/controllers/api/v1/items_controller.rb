@@ -41,6 +41,15 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def find
+    if params[:name] == nil || params[:name] == ""
+      render json: { "error": "the query parameter 'name' and a corresponding search value are required at this endpoint"}, status: 412
+    else
+      item = Item.find_by_name(params[:name])
+      render json: Api::V1::ItemSerializer.new(item).serializable_hash
+    end
+  end
+
 private
 
   def item_params
