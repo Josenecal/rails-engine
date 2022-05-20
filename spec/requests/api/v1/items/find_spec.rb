@@ -30,7 +30,6 @@ RSpec.describe "find item by name endpoint: '/api/v1/items/find?name=query'" do
     item2 = create(:item, unit_price: 5.0, name: "c")
     item3 = create(:item, unit_price: 10.0, name: "B")
     get "/api/v1/items/find?min_price=5&max_price=10"
-binding.pry
     response_body = JSON.parse(response.body, symbolize_names: true)
 
     expect(response_body[:data][:id].to_i).to eq(item3.id)
